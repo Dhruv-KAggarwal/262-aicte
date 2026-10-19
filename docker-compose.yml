@@ -1,0 +1,31 @@
+services:
+  api:
+    build:
+      context: ./backend
+    environment:
+      APP_SECRET: ${APP_SECRET:-local-demo-only-change-before-deployment}
+      DATABASE_PATH: /service/data/aicte_demo.db
+      UPLOAD_DIR: /service/private_uploads
+      FRONTEND_ORIGIN: http://localhost:3000
+      SECURE_COOKIE: "false"
+    ports:
+      - "8000:8000"
+    volumes:
+      - api_data:/service/data
+      - api_uploads:/service/private_uploads
+
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+volumes:
+  api_data:
+  api_uploads:

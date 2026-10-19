@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+.git
+coverage
+backend/.venv
+backend/data
+backend/private_uploads
+backend/.pytest_cache
+backend/**/__pycache__
